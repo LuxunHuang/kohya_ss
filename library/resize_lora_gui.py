@@ -4,7 +4,7 @@ import subprocess
 import os
 from .common_gui import get_saveasfilename_path, get_file_path
 
-PYTHON = 'python3' if os.name == 'posix' else './venv/Scripts/python.exe'
+#PYTHON = 'python3' if os.name == 'posix' else './venv/Scripts/python.exe'
 folder_symbol = '\U0001f4c2'  # 📂
 refresh_symbol = '\U0001f504'  # 🔄
 save_style_symbol = '\U0001f4be'  # 💾
@@ -30,12 +30,12 @@ def resize_lora(
     if not os.path.isfile(model):
         msgbox('The provided model is not a file')
         return
-    
+
     if dynamic_method == 'sv_ratio':
         if float(dynamic_param) < 2:
             msgbox(f'Dynamic parameter for {dynamic_method} need to be 2 or greater...')
             return
-        
+
     if dynamic_method == 'sv_fro' or dynamic_method == 'sv_cumulative':
         if float(dynamic_param) < 0 or float(dynamic_param) > 1:
             msgbox(f'Dynamic parameter for {dynamic_method} need to be between 0 and 1...')
@@ -48,7 +48,8 @@ def resize_lora(
     if device == '':
         device = 'cuda'
 
-    run_cmd = f'{PYTHON} "{os.path.join("tools","resize_lora.py")}"'
+    run_cmd = f". {os.environ['ROOT']}/kohya_venv/bin/activate; "
+    run_cmd += f'python "networks\\resize_lora.py"'
     run_cmd += f' --save_precision {save_precision}'
     run_cmd += f' --save_to {save_to}'
     run_cmd += f' --model {model}'
