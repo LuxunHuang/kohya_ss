@@ -29,6 +29,6 @@ xformers
 # For locon support
 locon==0.0.2
 # for kohya_ss library
-deepspeed
+# deepspeed
 triton
 .
